@@ -1,47 +1,73 @@
-function calculate() {
-  // Отримуємо значення введені користувачем
-  const integer1 = parseInt(document.getElementById('integer1').value);
-  const numerator1 = parseInt(document.getElementById('numerator1').value);
-  const denominator1 = parseInt(document.getElementById('denominator1').value);
-
-  const integer2 = parseInt(document.getElementById('integer2').value);
-  const numerator2 = parseInt(document.getElementById('numerator2').value);
-  const denominator2 = parseInt(document.getElementById('denominator2').value);
-
-  // Перевірка на некоректні дані
-  if (isNaN(integer1) || isNaN(numerator1) || isNaN(denominator1) || isNaN(integer2) || isNaN(numerator2) || isNaN(denominator2)) {
-    document.getElementById('result').innerHTML = "Будь ласка, введіть коректні значення для обох дробів.";
-    return;
-  }
-
-  // Обрахунок значень
-  const result_integer = integer1 + integer2;
-  const result_numerator = numerator1 * denominator2 + numerator2 * denominator1;
-  const result_denominator = denominator1 * denominator2;
-
-  // Скорочення дробу
-  const gcd = getGcd(result_numerator, result_denominator);
-  const simplified_numerator = result_numerator / gcd;
-  const simplified_denominator = result_denominator / gcd;
-
-  // Показ результату
-  let result = '';
-  if (result_integer !== 0) {
-    result += result_integer + ' ';
-  }
-  if (simplified_numerator !== 0) {
-    result += simplified_numerator + '/' + simplified_denominator;
-  }
-  if (result === '') {
-    result = '0';
-  }
-  document.getElementById('result').innerHTML = result;
-}
-
-function getGcd(a, b) {
+// Знаходження найбільшого спільного дільника для двох чисел
+function gcd(a, b) {
   if (b === 0) {
     return a;
   } else {
-    return getGcd(b, a % b);
+    return gcd(b, a % b);
+  }
+}
+
+// Знаходження найменшого спільного кратного для двох чисел
+function lcm(a, b) {
+  return (a * b) / gcd(a, b);
+}
+
+// Обчислення суми двох дробів
+function addFractions(n1, d1, n2, d2) {
+  var lcd = lcm(d1, d2);
+  var a = lcd / d1 * n1;
+  var b = lcd / d2 * n2;
+  var sum = a + b;
+  var g = gcd(sum, lcd);
+  return { num: sum / g, den: lcd / g };
+}
+
+// Обчислення різниці двох дробів
+function subtractFractions(n1, d1, n2, d2) {
+  var lcd = lcm(d1, d2);
+  var a = lcd / d1 * n1;
+  var b = lcd / d2 * n2;
+  var diff = a - b;
+  var g = gcd(diff, lcd);
+  return { num: diff / g, den: lcd / g };
+}
+
+// Обчислення добутку двох дробів
+function multiplyFractions(n1, d1, n2, d2) {
+  var product = n1 * n2;
+  var g1 = gcd(product, d1);
+  var g2 = gcd(g1, d2);
+  return { num: product / g2, den: d1 / g1 * d2 / g2 };
+}
+
+// Обчислення частки двох дробів
+function divideFractions(n1, d1, n2, d2) {
+  var quotient = n1 * d2;
+  var g1 = gcd(quotient, n2);
+  var g2 = gcd(d1, g1);
+  return { num: quotient / g1, den: d1 / g2 * n2 / g1 };
+}
+
+// Отримання значень з форми та розрахунок результату
+function calculate() {
+  var n1 = parseInt(document.getElementById("num1").value);
+  var d1 = parseInt(document.getElementById("den1").value);
+  var n2 = parseInt(document.getElementById("num2").value);
+  var d2 = parseInt(document.getElementById("den2").value);
+  var op = document.getElementById("operator").value;
+  var result = document.getElementById("result");
+
+  if (op === "+") {
+    var sum = addFractions(n1, d1, n2, d2);
+    result.value = sum.num + "/" + sum.den;
+  } else if (op === "-") {
+    var diff = subtractFractions(n1, d1, n2, d2);
+    result.value = diff.num + "/" + diff.den;
+  } else if (op === "*") {
+    var product = multiplyFractions(n1, d1, n2, d2);
+    result.value = product.num + "/" + product.den;
+  } else if (op === "/") {
+    var quotient = divideFractions(n1, d1, n2, d2);
+    result.value = quotient.num + "/" + quotient.den;
   }
 }
