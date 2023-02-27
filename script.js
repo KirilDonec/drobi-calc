@@ -1,29 +1,41 @@
-// отримати всі кнопки
-const buttons = document.querySelectorAll(".btn");
-// отримати div для виведення результату
-const result = document.querySelector(".result");
-
-// додати обробник подій для кожної кнопки
-buttons.forEach(function (button) {
-  button.addEventListener("click", calculate);
-});
-
-// функція для обчислення результату
-function calculate(event) {
-  // отримати значення, яке знаходиться на кнопці, яку ми натиснули
-  const clickedButtonValue = event.target.value;
-
-  if (clickedButtonValue === "=") {
-    // перевірка, чи є значення в полі результату
-    if (result.value !== "") {
-      // обчислення результату за допомогою функції eval
-      result.value = eval(result.value);
-    }
-  } else if (clickedButtonValue === "C") {
-    // очистити поле результату
-    result.value = "";
-  } else {
-    // додати значення кнопки до полю результату
-    result.value += clickedButtonValue;
+function gcd(a, b) {
+  if (b == 0) {
+    return a;
   }
+  return gcd(b, a % b);
 }
+
+function simplify(numerator, denominator) {
+  const divisor = gcd(numerator, denominator);
+  return [numerator / divisor, denominator / divisor];
+}
+
+function addFractions(a, b) {
+  const numerator = a[0] * b[1] + b[0] * a[1];
+  const denominator = a[1] * b[1];
+  return simplify(numerator, denominator);
+}
+
+function subtractFractions(a, b) {
+  const numerator = a[0] * b[1] - b[0] * a[1];
+  const denominator = a[1] * b[1];
+  return simplify(numerator, denominator);
+}
+
+function multiplyFractions(a, b) {
+  const numerator = a[0] * b[0];
+  const denominator = a[1] * b[1];
+  return simplify(numerator, denominator);
+}
+
+function divideFractions(a, b) {
+  const numerator = a[0] * b[1];
+  const denominator = a[1] * b[0];
+  return simplify(numerator, denominator);
+}
+
+// пример использования функций для сложения дробей
+const a = [1, 2];
+const b = [1, 3];
+const sum = addFractions(a, b);
+console.log(sum); // [5, 6]
