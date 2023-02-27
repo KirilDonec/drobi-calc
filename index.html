@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <meta charset="utf-8">
     <title>Калькулятор дробей</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<div class="calculator">
-		<div class="row">
-			<div class="cell">
-				<input type="text" id="numerator1" class="fraction-input">
-				<hr>
-				<input type="text" id="denominator1" class="fraction-input">
-			</div>
-			<div class="cell operator">
-				<div class="operation" id="add">+</div>
-				<div class="operation" id="subtract">-</div>
-				<div class="operation" id="multiply">*</div>
-				<div class="operation" id="divide">/</div>
-			</div>
-			<div class="cell">
-				<input type="text" id="numerator2" class="fraction-input">
-				<hr>
-				<input type="text" id="denominator2" class="fraction-input">
-			</div>
-			<div class="cell equals">
-				=
-			</div>
-			<div class="cell">
-				<input type="text" id="numerator3" class="fraction-input" readonly>
-				<hr>
-				<input type="text" id="denominator3" class="fraction-input" readonly>
-			</div>
-			<div class="cell">
-				<button id="calculate">Рассчитать</button>
-			</div>
-		</div>
-	</div>
-
-	<script src="script.js"></script>
-</body>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Калькулятор дробей</h1>
+      <form>
+        <input type="number" name="num1" placeholder="Числитель 1">
+        <input type="number" name="denom1" placeholder="Знаменатель 1">
+        <select name="operator">
+          <option value="add">+</option>
+          <option value="subtract">-</option>
+          <option value="multiply">*</option>
+          <option value="divide">/</option>
+        </select>
+        <input type="number" name="num2" placeholder="Числитель 2">
+        <input type="number" name="denom2" placeholder="Знаменатель 2">
+        <button type="submit" name="submit">=</button>
+      </form>
+      <div class="result">
+        <p>Результат:</p>
+        <p id="answer"></p>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
