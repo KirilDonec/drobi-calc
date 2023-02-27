@@ -1,63 +1,29 @@
-// Функция, которая складывает две дроби
-function addFractions(n1, d1, n2, d2) {
-  var resultN = n1 * d2 + n2 * d1;
-  var resultD = d1 * d2;
-  return reduceFraction(resultN, resultD);
-}
+// отримати всі кнопки
+const buttons = document.querySelectorAll(".btn");
+// отримати div для виведення результату
+const result = document.querySelector(".result");
 
-// Функция, которая вычитает из одной дроби другую
-function subtractFractions(n1, d1, n2, d2) {
-  var resultN = n1 * d2 - n2 * d1;
-  var resultD = d1 * d2;
-  return reduceFraction(resultN, resultD);
-}
+// додати обробник подій для кожної кнопки
+buttons.forEach(function (button) {
+  button.addEventListener("click", calculate);
+});
 
-// Функция, которая умножает две дроби
-function multiplyFractions(n1, d1, n2, d2) {
-  var resultN = n1 * n2;
-  var resultD = d1 * d2;
-  return reduceFraction(resultN, resultD);
-}
+// функція для обчислення результату
+function calculate(event) {
+  // отримати значення, яке знаходиться на кнопці, яку ми натиснули
+  const clickedButtonValue = event.target.value;
 
-// Функция, которая делит одну дробь на другую
-function divideFractions(n1, d1, n2, d2) {
-  var resultN = n1 * d2;
-  var resultD = n2 * d1;
-  return reduceFraction(resultN, resultD);
-}
-
-// Функция, которая сокращает дробь до несократимого вида
-function reduceFraction(n, d) {
-  var gcd = findGcd(n, d);
-  return [n / gcd, d / gcd];
-}
-
-// Функция, которая находит наибольший общий делитель двух чисел
-function findGcd(a, b) {
-  a = Math.abs(a);
-  b = Math.abs(b);
-  while (b) {
-    var t = b;
-    b = a % b;
-    a = t;
+  if (clickedButtonValue === "=") {
+    // перевірка, чи є значення в полі результату
+    if (result.value !== "") {
+      // обчислення результату за допомогою функції eval
+      result.value = eval(result.value);
+    }
+  } else if (clickedButtonValue === "C") {
+    // очистити поле результату
+    result.value = "";
+  } else {
+    // додати значення кнопки до полю результату
+    result.value += clickedButtonValue;
   }
-  return a;
 }
-
-// Получаем значения от пользователя
-var n1 = parseInt(prompt("Введите числитель первой дроби:"));
-var d1 = parseInt(prompt("Введите знаменатель первой дроби:"));
-var n2 = parseInt(prompt("Введите числитель второй дроби:"));
-var d2 = parseInt(prompt("Введите знаменатель второй дроби:"));
-
-// Выполняем операции с дробями
-var sum = addFractions(n1, d1, n2, d2);
-var difference = subtractFractions(n1, d1, n2, d2);
-var product = multiplyFractions(n1, d1, n2, d2);
-var quotient = divideFractions(n1, d1, n2, d2);
-
-// Выводим результаты
-document.write("Сумма: " + sum[0] + "/" + sum[1] + "<br>");
-document.write("Разность: " + difference[0] + "/" + difference[1] + "<br>");
-document.write("Произведение: " + product[0] + "/" + product[1] + "<br>");
-document.write("Частное: " + quotient[0] + "/" + quotient[1]);
