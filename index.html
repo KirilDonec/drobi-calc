@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Калькулятор дробів</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>Калькулятор дробів</h1>
+	<form>
+		<input type="text" name="numerator1" placeholder="Чисельник дробу 1"><br>
+		<input type="text" name="denominator1" placeholder="Знаменник дробу 1"><br>
+		<select name="operator">
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select><br>
+		<input type="text" name="numerator2" placeholder="Чисельник дробу 2"><br>
+		<input type="text" name="denominator2" placeholder="Знаменник дробу 2"><br>
+		<input type="button" value="Розрахувати" onclick="calculateFraction()"><br>
+		<input type="text" name="result" placeholder="Результат"><br>
+	</form>
+
+	<script>
+		function calculateFraction() {
+			var numerator1 = parseInt(document.getElementsByName("numerator1")[0].value);
+			var denominator1 = parseInt(document.getElementsByName("denominator1")[0].value);
+			var numerator2 = parseInt(document.getElementsByName("numerator2")[0].value);
+			var denominator2 = parseInt(document.getElementsByName("denominator2")[0].value);
+			var operator = document.getElementsByName("operator")[0].value;
+			var result;
+
+			switch (operator) {
+				case "+":
+					result = numerator1 * denominator2 + numerator2 * denominator1;
+					result += "/" + (denominator1 * denominator2);
+					break;
+				case "-":
+					result = numerator1 * denominator2 - numerator2 * denominator1;
+					result += "/" + (denominator1 * denominator2);
+					break;
+				case "*":
+					result = numerator1 * numerator2;
+					result += "/" + (denominator1 * denominator2);
+					break;
+				case "/":
+					result = numerator1 * denominator2;
+					result += "/" + (denominator1 * numerator2);
+					break;
+			}
+
+			document.getElementsByName("result")[0].value = result;
+		}
+	</script>
+</body>
+</html>
